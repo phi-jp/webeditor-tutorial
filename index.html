@@ -20,14 +20,22 @@
                 text-align: center;
             }
 
-            .edit-field {
+            #editor {
                 width: 100%;
+            }
+
+            .footer {
+                background-color: rgb(240, 240, 240);
+                margin-top: 30px;
+                padding: 20px;
+                text-align: center;
+                box-shadow: 0px 0px 4px 0px #aaa;
             }
         </style>
         <link href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/css/bootstrap.css" rel="stylesheet">
         <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
         <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
-        <script src="main.js">
+        <script src="script/main.js">
         </script>
     </head>
     <body>
@@ -56,19 +64,33 @@
             <div class="row">
                 <div class="span3">
                     <h4>File List</h4>
+                    <div>
+                        <select size="12" id="file-list"></select>
+                        <button id="btn-open" class="btn btn-primary">Open</button>
+                        <button id="btn-rename" class="btn btn-success">Rename</button>
+                        <button id="btn-delete" class="btn btn-danger">Delete</button>
+                    </div>
                 </div>
                 <div class="span9">
                     <ul class="nav nav-tabs">
-                        <li class="active"><a href="#untitled" data-toggle="tab">Untitled</a></li>
+                        <li class="active"><a id="edit-title" href="#untitled" data-toggle="tab">Untitled</a></li>
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane edit-pane active" id="untitled">
-                            <textarea class="edit-field" placeholder="ここにテキストを書いてね♪"></textarea>
+                            <textarea id="editor" placeholder="ここにテキストを書いてね♪" rows="20"></textarea>
+                            <div class="pull-right">
+                                <button id="btn-save" class="btn btn-primary">Save</button>
+                                <button id="btn-clear" class="btn btn-danger">Clear</button>
+                            </div>
                         </div>
                     </div>
 
                 </div>
             </div>
+        </div>
+
+        <div class="footer">
+            Copyright © TM Life. All Rights Reserved.
         </div>
 
 
