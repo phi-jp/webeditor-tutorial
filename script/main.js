@@ -7,83 +7,21 @@
     var $query    = function(q)  { return document.querySelector(q); }
     var $queryAll = function(q)  { return document.querySelectorAll(q); }
 
+    var editor = null;
+
     window.onload = function() {
         init();
     };
 
     var init = function() {
+        editor = ace.edit("editor");
+        editor.setTheme("ace/theme/solarized_light");
+        editor.getSession().setMode("ace/mode/javascript");
+        
         // ファイルリストを更新
         refreshFileList();
         // イベントをセットアップ
         setupEvent();
-
-        /*
-    var text_area = $id("main-ta");
-    var file_list = $id("file-list");
-    var file_header = $class("file-header");
-
-    // save
-    $id("save").addEventListener("click", function(){
-        var file_name = $class("file-name").innerHTML;
-        var value = text_area.value;
-        // 保存
-        file_name = tm.EditorHelper.save(file_name, value);
-        // ファイルヘッダを更新
-        refreshFileHader(file_name);
-        // ファイルリストを更新
-        refreshFileList();
-    }, false);
-
-    // save as
-    $id("save-as").addEventListener("click", function(){
-        var value = text_area.value;
-        // 保存
-        var file_name = tm.EditorHelper.saveAs(value);
-        // ファイルヘッダを更新
-        refreshFileHader(file_name);
-        // ファイルリストを更新
-        refreshFileList();
-    }, false);
-    
-    // open
-    $id("open").addEventListener("click", function(){
-        var file_name = file_list.value;
-        text_area.value = tm.EditorHelper.open(file_name);
-        // ファイルヘッダを更新
-        refreshFileHader(file_name);
-    }, false);
-    
-    // clear
-    $id("clear").addEventListener("click", function(){
-        text_area.value = "";
-    }, false);
-    
-    // delete
-    $id("delete").addEventListener("click", function(){
-        var file_name = file_list.value;
-        tm.EditorHelper["delete"](file_name);
-        // ファイルリストを更新
-        refreshFileList();
-    }, false);
-    
-    // rename
-    $id("rename").addEventListener("click", function(){
-        var file_name = file_list.value;
-        tm.EditorHelper.rename(file_name);
-        // ファイルリストを更新
-        refreshFileList();
-    }, false);
-    
-    // ファイルリストの項目をクリックしたときに open と同じ動作にする
-    file_list.addEventListener("dblclick", function(){
-        var file_name = file_list.value;
-        if (file_name) {
-            text_area.value = tm.EditorHelper.open(file_name);
-            // ファイルヘッダを更新
-            refreshFileHader(file_name);
-        }
-    }, false);
-        */
     };
 
     var refreshFileList = function() {
@@ -139,8 +77,7 @@
 
         // clear
         $query("#btn-clear").onclick = function() {
-            var editor = $query("#editor");
-            editor.value = "";
+            editor.setValue("");
         };
 
         $query("#editor").onkeydown = function(e) {
@@ -151,8 +88,6 @@
     };
 
     var saveFile = function(filename) {
-        var editor = $query("#editor");
-
         if (filename == "Untitled") {
             // 名前を入力
             filename = prompt("file name: ", "");
@@ -164,15 +99,14 @@
             }
         }
 
-        localStorage.setItem(filename, editor.value);
+        localStorage.setItem(filename, editor.getValue());
 
         // ファイルリストを更新
         refreshFileList();
     };
 
     var openFile = function(filename) {
-        var editor = $query("#editor");
-        editor.value = localStorage.getItem(filename);
+        editor.setValue(localStorage.getItem(filename));
 
         $query("#edit-title").innerHTML = filename;
     };
